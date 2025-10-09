@@ -42,7 +42,7 @@ public class PlayerMove : MonoBehaviour
             }
             if (Input.GetKeyDown(KeyCode.Alpha2))
             {
-                cool2 = 20;
+                cool2 = 15;
                 skillUI2.StartCooldown(cool2);
             }
         }
@@ -65,7 +65,7 @@ public class PlayerMove : MonoBehaviour
             }
             if (Input.GetKeyDown(KeyCode.End))
             {
-                cool2 = 20;
+                cool2 = 15;
                 skillUI2.StartCooldown(cool2);
             }
         }
