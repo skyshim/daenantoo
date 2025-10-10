@@ -5,11 +5,10 @@ using static Unity.Collections.AllocatorManager;
 
 public class BlockRunner : MonoBehaviour
 {
-    public List<Block> blocks = new List<Block>();
     public GameObject target;
     public float actionDelay = 0.4f;
 
-    public SkillEditor skillEditor;
+    public List<Block> blocks = new List<Block>();
 
     public void StartRun()
     {
@@ -18,13 +17,8 @@ public class BlockRunner : MonoBehaviour
 
     private IEnumerator RunBlocks()
     {
-        if (skillEditor.blocks.Count == 0)
-        {
-            Debug.LogWarning("블록이 없습니다!");
-            yield break;
-        }
 
-        foreach (var block in skillEditor.blocks)
+        foreach (var block in blocks)
         {
             yield return StartCoroutine(block.Execute(target, this));
             yield return new WaitForSeconds(actionDelay); // 블록 사이 딜레이

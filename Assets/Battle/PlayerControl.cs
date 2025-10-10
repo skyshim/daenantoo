@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
+    public BlockRunner blockRunner1;
+    public BlockRunner blockRunner2;
     public SkillUI skillUI1;
     public SkillUI skillUI2;
+
     private Rigidbody2D rb;
     private float cool1;
     private float cool2;
@@ -16,6 +19,17 @@ public class PlayerMove : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         cool1 = 0; cool2 = 0;
+
+        if (gameObject.tag == "P1")
+        {
+            blockRunner1.blocks = SkillTransfer.Instance.player1Skill1;
+            blockRunner2.blocks = SkillTransfer.Instance.player1Skill2;
+        }
+        else if (gameObject.tag == "P2")
+        {
+            blockRunner1.blocks = SkillTransfer.Instance.player2Skill1;
+            blockRunner2.blocks = SkillTransfer.Instance.player2Skill2;
+        }
     }
 
     // Update is called once per frame
@@ -35,15 +49,18 @@ public class PlayerMove : MonoBehaviour
                 isGrounded = false;
             }
 
-            if (Input.GetKeyDown(KeyCode.Alpha1))
+            if (Input.GetKeyDown(KeyCode.Alpha1) && cool1 <= 0)
             {
                 cool1 = 5;
                 skillUI1.StartCooldown(cool1);
+                blockRunner1.StartRun();
             }
-            if (Input.GetKeyDown(KeyCode.Alpha2))
+
+            if (Input.GetKeyDown(KeyCode.Alpha2) && cool2 <= 0)
             {
                 cool2 = 15;
                 skillUI2.StartCooldown(cool2);
+                blockRunner2.StartRun();
             }
         }
         else if (gameObject.tag == "P2")
@@ -62,11 +79,13 @@ public class PlayerMove : MonoBehaviour
             {
                 cool1 = 5;
                 skillUI1.StartCooldown(cool1);
+                blockRunner1.StartRun();
             }
             if (Input.GetKeyDown(KeyCode.End))
             {
                 cool2 = 15;
                 skillUI2.StartCooldown(cool2);
+                blockRunner2.StartRun();
             }
         }
 

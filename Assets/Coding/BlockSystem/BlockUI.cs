@@ -3,20 +3,31 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class BlockUI : MonoBehaviour
+public class BlockUI : MonoBehaviour, IPointerClickHandler
 {
-    public Transform editorParent; // StartBlock 밑 Transform
-    public SkillEditor skillEditor; // 리스트 관리
-
+    public bool isPaletteBlock = true; // true: 패널 버튼, false: 에디터 블록
+    private Block blockPrefab;
+    private SkillEditor skillEditor;  // 이제 Inspector에서 안 넣어도 됨
+    private void Awake()
+    {
+        skillEditor = FindObjectOfType<SkillEditor>();
+        blockPrefab = this.GetComponent<Block>();
+    }
     public void OnPointerClick(PointerEventData eventData)
     {
-        // 에디터에 블록 생성
-        GameObject newBlockGO = Instantiate(gameObject, editorParent);
-        EditorBlock editorBlock = newBlockGO.AddComponent<EditorBlock>();
-        editorBlock.skillEditor = skillEditor;
+        if (isPaletteBlock)
+        {
+            Block newBlock = skillEditor.AddBlock(blockPrefab);
 
-        // BlockRunner 실행용 리스트에 추가
-        Block blockComponent = newBlockGO.GetComponent<Block>();
-        skillEditor.AddBlock(blockComponent);
+            // 생성된 블록을 Editor용으로 바꾸기
+            BlockUI newBlockUI = newBlock.gameObject.GetComponent<BlockUI>();
+            newBlockUI.isPaletteBlock = false;    // 에디터 블록
+            newBlockUI.skillEditor = skillEditor;
+        }
+        else
+        {
+            // 삭제
+            skillEditor.RemoveBlock(GetComponent<Block>());
+        }
     }
 }
