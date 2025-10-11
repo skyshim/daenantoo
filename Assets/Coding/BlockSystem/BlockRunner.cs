@@ -17,6 +17,8 @@ public class BlockRunner : MonoBehaviour
 
     private IEnumerator RunBlocks()
     {
+        PlayerControl pc = GetComponent<PlayerControl>();
+        if (pc != null) pc.isUsingSkill = true;
 
         foreach (var block in blocks)
         {
@@ -24,6 +26,7 @@ public class BlockRunner : MonoBehaviour
             yield return new WaitForSeconds(actionDelay); // 블록 사이 딜레이
         }
 
+        if (pc != null) pc.isUsingSkill = false;
         Debug.Log("모든 블록 실행 완료");
     }
 }

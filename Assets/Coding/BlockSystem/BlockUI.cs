@@ -11,7 +11,7 @@ public class BlockUI : MonoBehaviour, IPointerClickHandler
     private void Awake()
     {
         skillEditor = FindObjectOfType<SkillEditor>();
-        blockPrefab = this.GetComponent<Block>();
+        blockPrefab = GetComponent<Block>();
     }
     public void OnPointerClick(PointerEventData eventData)
     {

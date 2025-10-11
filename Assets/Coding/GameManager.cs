@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator SkillCountdown()
     {
-        currentTime = 5f;
+        currentTime = 3f;
         while (currentTime > 0)
         {
             timerText.text = $"{Mathf.Ceil(currentTime)}";

@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class SkillUI : MonoBehaviour
 {
-
     public Image CoolFill;
     public TMP_Text CoolText;
 

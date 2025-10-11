@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class M_Backward : Block
 {
-    public float force = 5f;       // 앞으로 밀어주는 힘
+    public float force = 7f;       // 앞으로 밀어주는 힘
 
     public override IEnumerator Execute(GameObject target, BlockRunner runner)
     {

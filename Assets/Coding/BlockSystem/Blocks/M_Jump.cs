@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class M_Jump : Block
 {
-    public float force = 5f;       // 앞으로 밀어주는 힘
+    public float force = 7f;       // 앞으로 밀어주는 힘
 
     public override IEnumerator Execute(GameObject target, BlockRunner runner)
     {
@@ -19,7 +19,7 @@ public class M_Jump : Block
         Vector2 impulse = new Vector2(0, force);
 
         rb.AddForce(impulse, ForceMode2D.Impulse);
-        Debug.Log($"[M_Forward] {target.name} 위로 {force}만큼 이동");
+        Debug.Log($"[M_Jump] {target.name} 위로 {force}만큼 이동");
 
     }
 }
