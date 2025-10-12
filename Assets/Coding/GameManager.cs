@@ -1,14 +1,18 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
 
     public TMP_Text timerText;
     public SkillEditor skillEditor;
+    public GameObject skill2Popup;
 
     private float currentTime;
     private int currentSkill = 1; // 1: 스킬1, 2: 스킬2
@@ -37,7 +41,7 @@ public class GameManager : MonoBehaviour
         {
             currentSkill = 2;
             skillEditor.ClearAll();
-            StartCoroutine(SkillCountdown());
+            skill2Popup.SetActive(true);
         }
         else
         {
@@ -47,6 +51,7 @@ public class GameManager : MonoBehaviour
                 currentPlayer = 2;
                 currentSkill = 1;
                 skillEditor.ClearAll();
+                BlockUI.currentControlBlock = null;
                 StartCoroutine(SkillCountdown());
             }
             else
@@ -81,5 +86,21 @@ public class GameManager : MonoBehaviour
             else
                 SkillTransfer.Instance.player2Skill2 = skillData;
         }
+    }
+
+    public void OnControlBlockSelected(Block block)
+    {
+        ControlBlock cb = skillEditor.AddBlock(block).GetComponent<ControlBlock>();
+        BlockUI.currentControlBlock = cb;
+
+        HorizontalLayoutGroup hlg = cb.transform.Find("ContentArea").GetComponent<HorizontalLayoutGroup>();
+        hlg.childControlHeight = false;
+        LayoutRebuilder.ForceRebuildLayoutImmediate(hlg.GetComponent<RectTransform>());
+        hlg.childControlHeight = true;
+        LayoutRebuilder.ForceRebuildLayoutImmediate(hlg.GetComponent<RectTransform>());
+        //UI 초기화, 안하면 깨짐 ㅇㅇ
+
+        skill2Popup.SetActive(false);
+        StartCoroutine(SkillCountdown());
     }
 }

@@ -8,6 +8,9 @@ public class BlockUI : MonoBehaviour, IPointerClickHandler
     public bool isPaletteBlock = true; // true: 패널 버튼, false: 에디터 블록
     private Block blockPrefab;
     private SkillEditor skillEditor;  // 이제 Inspector에서 안 넣어도 됨
+
+    public static ControlBlock currentControlBlock = null;
+
     private void Awake()
     {
         skillEditor = FindObjectOfType<SkillEditor>();
@@ -17,7 +20,15 @@ public class BlockUI : MonoBehaviour, IPointerClickHandler
     {
         if (isPaletteBlock)
         {
-            Block newBlock = skillEditor.AddBlock(blockPrefab);
+            Block newBlock;
+            if (currentControlBlock != null)
+            {
+                newBlock = skillEditor.AddBlockToControl(blockPrefab, currentControlBlock);
+            }
+            else
+            {
+                newBlock = skillEditor.AddBlock(blockPrefab);
+            }
 
             // 생성된 블록을 Editor용으로 바꾸기
             BlockUI newBlockUI = newBlock.gameObject.GetComponent<BlockUI>();
