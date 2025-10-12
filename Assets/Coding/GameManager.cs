@@ -93,13 +93,6 @@ public class GameManager : MonoBehaviour
         ControlBlock cb = skillEditor.AddBlock(block).GetComponent<ControlBlock>();
         BlockUI.currentControlBlock = cb;
 
-        HorizontalLayoutGroup hlg = cb.transform.Find("ContentArea").GetComponent<HorizontalLayoutGroup>();
-        hlg.childControlHeight = false;
-        LayoutRebuilder.ForceRebuildLayoutImmediate(hlg.GetComponent<RectTransform>());
-        hlg.childControlHeight = true;
-        LayoutRebuilder.ForceRebuildLayoutImmediate(hlg.GetComponent<RectTransform>());
-        //UI ÃÊ±âÈ­, ¾ÈÇÏ¸é ±úÁü ¤·¤·
-
         skill2Popup.SetActive(false);
         StartCoroutine(SkillCountdown());
     }

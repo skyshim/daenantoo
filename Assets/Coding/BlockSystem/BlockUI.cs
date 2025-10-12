@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class BlockUI : MonoBehaviour, IPointerClickHandler
 {
@@ -40,5 +41,32 @@ public class BlockUI : MonoBehaviour, IPointerClickHandler
             // 삭제
             skillEditor.RemoveBlock(GetComponent<Block>());
         }
+
+        ReloadControlCanvas();
+
+    }
+    private void ReloadControlCanvas()
+    {
+        HorizontalLayoutGroup hlg = BlockUI.currentControlBlock.transform.Find("ContentArea").GetComponent<HorizontalLayoutGroup>();
+
+        for (int i = 0; i < 2; i++) //왠지는 모르겠는데 2번 리로드해야 됨 ㅇㅇ..
+        {
+            hlg.childControlHeight = false;
+            LayoutRebuilder.ForceRebuildLayoutImmediate(hlg.GetComponent<RectTransform>());
+            // 1프레임 뒤에 다시 true로
+            BlockUI.currentControlBlock.StartCoroutine(EnableChildControlHeightNextFrame(hlg));
+
+            hlg.childControlHeight = false;
+            LayoutRebuilder.ForceRebuildLayoutImmediate(hlg.GetComponent<RectTransform>());
+            // 1프레임 뒤에 다시 true로
+            BlockUI.currentControlBlock.StartCoroutine(EnableChildControlHeightNextFrame(hlg));
+        }
+    }
+    private IEnumerator EnableChildControlHeightNextFrame(HorizontalLayoutGroup hlg)
+    {
+        yield return null;
+        hlg.childControlHeight = true;
+        LayoutRebuilder.ForceRebuildLayoutImmediate(hlg.GetComponent<RectTransform>());
+        Canvas.ForceUpdateCanvases();
     }
 }

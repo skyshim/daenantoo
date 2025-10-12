@@ -27,7 +27,7 @@ public class SkillEditor : MonoBehaviour
             return null;
         }
 
-        if (targetControl.childBlocks.Count == 1)
+        if (targetControl.transform.Find("ContentArea/BlockContainer").childCount == 1)
         {
             Transform blockContainer = targetControl.transform.Find("ContentArea/BlockContainer");
             if (blockContainer != null)

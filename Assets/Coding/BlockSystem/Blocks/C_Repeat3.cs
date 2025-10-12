@@ -6,11 +6,13 @@ public class C_Repeat3 : ControlBlock
 {
     public override IEnumerator Execute(GameObject target, BlockRunner runner)
     {
+        Debug.Log(childBlocks.Count);
         for (int i = 0; i < 3; i++)
         {
             foreach (var child in childBlocks)
             {
                 yield return runner.StartCoroutine(child.Execute(target, runner));
+                yield return new WaitForSeconds(runner.actionDelay);
             }
         }
     }
