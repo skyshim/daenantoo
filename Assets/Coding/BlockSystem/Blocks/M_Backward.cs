@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class M_Backward : Block
 {
-    public float force = 7f;       // 앞으로 밀어주는 힘
+    public float force = 9f;       // 앞으로 밀어주는 힘
 
     public override IEnumerator Execute(GameObject target, BlockRunner runner)
     {
@@ -16,7 +16,7 @@ public class M_Backward : Block
 
         rb.velocity = new Vector2(0, rb.velocity.y);
         float dir = Mathf.Sign(target.transform.localScale.x);
-        Vector2 impulse = new Vector2(dir * force * -1, 0.1f);
+        Vector2 impulse = new Vector2(dir * force * -1, 1f);
 
         rb.AddForce(impulse, ForceMode2D.Impulse);
         Debug.Log($"[M_Forward] {target.name} 뒤로 {force}만큼 이동");

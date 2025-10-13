@@ -57,7 +57,7 @@ public class PlayerControl : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Alpha1) && canUse1Skill)
             {
                 canUse1Skill = false;
-                cool1 = 5;
+                cool1 = 3;
                 skillUI1.StartCooldown(cool1);
                 blockRunner1.StartRun();
                 StartCoroutine(ResetSkill1Cooldown());
@@ -87,7 +87,7 @@ public class PlayerControl : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Delete) && canUse1Skill)
             {
                 canUse1Skill = false;
-                cool1 = 5;
+                cool1 = 3;
                 skillUI1.StartCooldown(cool1);
                 blockRunner1.StartRun();
                 StartCoroutine(ResetSkill1Cooldown());
@@ -139,5 +139,12 @@ public class PlayerControl : MonoBehaviour
     {
         Health -= damage;
         healthBar.fillAmount = Health / 100;
+    }
+
+    //=================================================
+
+    public bool IsGrounded()
+    {
+        return isGrounded;
     }
 }
